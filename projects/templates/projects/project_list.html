@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StudyHub</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #111;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { color: orange; }
+        .card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(255,140,0,0.3);
+        }
+        a {
+            color: #ffae00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>StudyHub — проекты студентов</h1>
+    {% for project in projects %}
+        <div class="card">
+            <h2>{{ project.title }}</h2>
+            <p>{{ project.description }}</p>
+            <p><b>Технологии:</b> {{ project.technologies }}</p>
+            {% if project.github_link %}
+                <p><a href="{{ project.github_link }}" target="_blank">GitHub</a></p>
+            {% endif %}
+            <small>{{ project.created_at }}</small>
+        </div>
+    {% empty %}
+        <p>Пока нет проектов 😢</p>
+    {% endfor %}
+</body>
+</html>
