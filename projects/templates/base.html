@@ -10,11 +10,20 @@
 <header>
     <div class="container">
         <h1><a href="/">StudyHub</a></h1>
-        <nav>
-            <a href="/">Проекты</a>
-            <a href="/create/">Добавить проект</a>
-            <a href="/admin/">Админка</a>
-        </nav>
+            <nav>
+                <a class="a-primary"  href="/">Проекты</a>
+                <a class="a-primary"  href="/create/">Добавить проект</a>
+                {% if user.is_authenticated %}
+                    <form method="post" action="/logout/" style="display:inline;">
+                        {% csrf_token %}
+                        <button class="btn-primary" type="submit">Выйти</button>
+                    </form>
+                {% else %}
+                    <a class="a-primary"  href="/login/">Войти</a>
+                    <a class="a-primary"  href="/register/">Регистрация</a>
+                {% endif %}
+            </nav>
+
     </div>
 </header>
 
