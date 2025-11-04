@@ -1,85 +1,17 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Добавить проект</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            margin: 0;
-            padding: 20px;
-        }
+{% extends 'base.html' %}
 
-        h1 {
-            text-align: center;
-            color: #58a6ff;
-        }
+{% block title %}Добавить проект — StudyHub{% endblock %}
 
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 20px;
-        }
+{% block content %}
+<div class="create-container">
+    <h2>Добавить новый проект</h2>
 
-        label {
-            display: block;
-            margin-bottom: 6px;
-            color: #c9d1d9;
-        }
-
-        input[type="text"],
-        input[type="url"],
-        textarea {
-            width: 100%;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 8px;
-            margin-bottom: 15px;
-        }
-
-        input[type="text"]:focus,
-        input[type="url"]:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #58a6ff;
-        }
-
-        button {
-            background-color: #238636;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background-color: #2ea043;
-            cursor: pointer;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #58a6ff;
-        }
-    </style>
-</head>
-<body>
-    <h1>Добавить проект</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Создать</button>
+        <button type="submit" class="btn-primary">Создать</button>
     </form>
-    <a href="{% url 'project_list' %}" class="back-link">← Назад к проектам</a>
-</body>
-</html>
+
+    <a href="/" class="back-link">← Назад к проектам</a>
+</div>
+{% endblock %}

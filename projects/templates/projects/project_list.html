@@ -1,87 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>StudyHub — проекты студентов</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            margin: 0;
-            padding: 20px;
-        }
+{% extends 'base.html' %}
 
-        h1 {
-            color: #58a6ff;
-            text-align: center;
-        }
+{% block title %}StudyHub — проекты{% endblock %}
 
-        a {
-            color: #58a6ff;
-            text-decoration: none;
-        }
+{% block content %}
+<h2 class="page-title">Проекты студентов</h2>
 
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .top-bar {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .add-btn {
-            background-color: #21262d;
-            border: 1px solid #30363d;
-            color: #c9d1d9;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-        }
-
-        .add-btn:hover {
-            background-color: #30363d;
-            cursor: pointer;
-        }
-
-        .card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(88,166,255,0.1);
-        }
-
-        .card h2 {
-            color: #58a6ff;
-            margin-bottom: 8px;
-        }
-
-        .card small {
-            color: #8b949e;
-        }
-    </style>
-</head>
-<body>
-    <div class="top-bar">
-        <h1>StudyHub — проекты студентов</h1>
-        <a href="{% url 'project_create' %}" class="add-btn">+ Добавить проект</a>
+{% for project in projects %}
+    <div class="card">
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.description }}</p>
+        <p><b>Технологии:</b> {{ project.technologies }}</p>
+        {% if project.github_link %}
+            <a class="github-link" href="{{ project.github_link }}" target="_blank">GitHub</a>
+        {% endif %}
+        <p class="date">{{ project.created_at|date:"d.m.Y" }}</p>
     </div>
-
-    {% for project in projects %}
-        <div class="card">
-            <h2>{{ project.title }}</h2>
-            <p>{{ project.description }}</p>
-            <p><b>Технологии:</b> {{ project.technologies }}</p>
-            {% if project.github_link %}
-                <p><a href="{{ project.github_link }}" target="_blank">GitHub</a></p>
-            {% endif %}
-            <small>Создан: {{ project.created_at }}</small>
-        </div>
-    {% empty %}
-        <p style="text-align:center;">Пока нет проектов.</p>
-    {% endfor %}
-</body>
-</html>
+{% empty %}
+    <p>Пока нет проектов 😔</p>
+{% endfor %}
+{% endblock %}
