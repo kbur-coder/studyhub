@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} — StudyHub{% endblock %}
+
+{% block content %}
+<div class="project-detail-container">
+    <div class="project-detail-header">
+        <a href="{% url 'project_list' %}" class="back-link-detail">← Назад к проектам</a>
+        <h1>{{ project.title }}</h1>
+        {% if project.author %}
+            <div class="project-author-info">
+                {% if project.author.profile.avatar %}
+                    <img src="{{ project.author.profile.avatar.url }}" alt="{{ project.author.username }}" class="author-avatar-detail">
+                {% else %}
+                    <div class="author-avatar-detail default-avatar-small" style="background: linear-gradient(135deg, #ffae00 0%, #ff8800 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: bold;">
+                        {{ project.author.username|first|upper }}
+                    </div>
+                {% endif %}
+                <div>
+                    <p class="author-name"><a href="{% url 'profile' project.author.username %}">{{ project.author.username }}</a></p>
+                    <p class="project-date-detail">{{ project.created_at|date:"d F Y" }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if project.image %}
+        <div class="project-image-container">
+            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image-detail">
+        </div>
+    {% endif %}
+
+    <div class="project-content">
+        <div class="project-main">
+            <h2>Описание</h2>
+            <p class="project-description">{{ project.description|linebreaks }}</p>
+
+            <div class="project-technologies">
+                <h3>Технологии</h3>
+                <div class="tech-tags">
+                    {% for tech in technologies_list %}
+                        <span class="tech-tag">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if project.external_link %}
+                <div class="project-links">
+                    <a href="{{ project.external_link }}" target="_blank" class="btn-external">
+                        🔗 Посмотреть проект
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="project-sidebar">
+            <div class="sidebar-card">
+                <h3>Информация о проекте</h3>
+                <div class="info-item">
+                    <span class="info-label">Дата создания:</span>
+                    <span class="info-value">{{ project.created_at|date:"d.m.Y" }}</span>
+                </div>
+                {% if project.author %}
+                    <div class="info-item">
+                        <span class="info-label">Автор:</span>
+                        <span class="info-value">
+                            <a href="{% url 'profile' project.author.username %}">{{ project.author.username }}</a>
+                        </span>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if is_author %}
+                <div class="sidebar-card">
+                    <a href="{% url 'edit_project' project.id %}" class="btn-primary" style="width: 100%; text-align: center; margin-top: 10px;">Редактировать проект</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.project-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.project-detail-header {
+    margin-bottom: 30px;
+}
+
+.back-link-detail {
+    display: inline-block;
+    color: #58a6ff;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    transition: color 0.2s;
+}
+
+.back-link-detail:hover {
+    color: #79c0ff;
+    text-decoration: underline;
+}
+
+.project-detail-header h1 {
+    color: #ffae00;
+    font-size: 2.5em;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+.project-author-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.author-avatar-detail {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffae00;
+}
+
+.author-name {
+    margin: 0;
+    font-weight: 600;
+}
+
+.author-name a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+.author-name a:hover {
+    text-decoration: underline;
+}
+
+.project-date-detail {
+    margin: 5px 0 0 0;
+    color: #8b949e;
+    font-size: 0.9em;
+}
+
+.project-image-container {
+    margin: 30px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.project-image-detail {
+    width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+    display: block;
+    background: #161b22;
+}
+
+.project-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.project-main h2 {
+    color: #ffae00;
+    margin-top: 0;
+    font-size: 1.8em;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 10px;
+}
+
+.project-description {
+    line-height: 1.8;
+    font-size: 1.05em;
+    color: #c9d1d9;
+    margin: 20px 0;
+}
+
+.project-technologies {
+    margin: 40px 0;
+}
+
+.project-technologies h3 {
+    color: #ffae00;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tech-tag {
+    background: linear-gradient(135deg, #ffae00 0%, #ff8800 100%);
+    color: #0d1117;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(255, 174, 0, 0.3);
+}
+
+.project-links {
+    margin: 30px 0;
+}
+
+.btn-external {
+    display: inline-block;
+    background: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+}
+
+.btn-external:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+}
+
+.sidebar-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.sidebar-card h3 {
+    color: #ffae00;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #30363d;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: #8b949e;
+    font-size: 0.9em;
+}
+
+.info-value {
+    color: #c9d1d9;
+    font-weight: 500;
+}
+
+.info-value a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+.info-value a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 968px) {
+    .project-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-detail-header h1 {
+        font-size: 2em;
+    }
+}
+</style>
+{% endblock %}
+

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактировать профиль — StudyHub{% endblock %}
+
+{% block content %}
+<div class="create-container">
+    <h2>Редактировать профиль</h2>
+    <p style="color: #666; margin-bottom: 20px;">Обновите информацию о себе</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}:</label>
+            {% if profile.avatar %}
+                <p style="color: #8b949e; font-size: 0.9em; margin-bottom: 5px;">Текущий аватар: <img src="{{ profile.avatar.url }}" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%; vertical-align: middle; margin-left: 10px;"></p>
+            {% endif %}
+            {{ form.avatar }}
+            <small style="display: block; color: #666; margin-top: 5px;">Изображение будет автоматически уменьшено до 200x200px.</small>
+            {% if form.avatar.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.avatar.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.bio.id_for_label }}">{{ form.bio.label }}:</label>
+            {{ form.bio }}
+            {% if form.bio.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.bio.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.location.id_for_label }}">{{ form.location.label }}:</label>
+            {{ form.location }}
+            {% if form.location.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.location.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.website.id_for_label }}">{{ form.website.label }}:</label>
+            {{ form.website }}
+            {% if form.website.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.website.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.github.id_for_label }}">{{ form.github.label }}:</label>
+            {{ form.github }}
+            <small style="display: block; color: #666; margin-top: 5px;">Только username, без @ и https://github.com/</small>
+            {% if form.github.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.github.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn-primary">Сохранить изменения</button>
+    </form>
+
+    <a href="{% url 'profile' %}" class="back-link">← Назад к профилю</a>
+</div>
+{% endblock %}
+

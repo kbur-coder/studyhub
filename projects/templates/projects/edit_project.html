@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактировать проект — StudyHub{% endblock %}
+
+{% block content %}
+<div class="create-container">
+    <h2>Редактировать проект</h2>
+    <p style="color: #666; margin-bottom: 20px;">Измените информацию о вашем проекте ниже.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.title.id_for_label }}">{{ form.title.label }}:</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.technologies.id_for_label }}">{{ form.technologies.label }}:</label>
+            {{ form.technologies }}
+            {% if form.technologies.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.technologies.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.external_link.id_for_label }}">{{ form.external_link.label }}:</label>
+            {{ form.external_link }}
+            {% if form.external_link.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.external_link.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.image.id_for_label }}">{{ form.image.label }}:</label>
+            {% if project.image %}
+                <p style="color: #8b949e; font-size: 0.9em; margin-bottom: 5px;">Текущее изображение: <a href="{{ project.image.url }}" target="_blank">Просмотреть</a></p>
+            {% endif %}
+            {{ form.image }}
+            <small style="display: block; color: #666; margin-top: 5px;">Изображение будет автоматически уменьшено, если оно слишком большое.</small>
+            {% if form.image.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.image.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn-primary">Сохранить изменения</button>
+    </form>
+
+    <a href="/" class="back-link">← Назад к проектам</a>
+</div>
+{% endblock %}
+
