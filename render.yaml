@@ -1,7 +1,7 @@
 services:
   - type: web
     name: studyhub
-    env: python
+    runtime: python
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
     startCommand: gunicorn backend.wsgi:application
     envVars:
