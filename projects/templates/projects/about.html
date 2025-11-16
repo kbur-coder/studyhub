@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}О нас — StudyHub{% endblock %}
+
+{% block content %}
+<div class="create-container">
+    <h2>О StudyHub</h2>
+    
+    <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+        <p style="font-size: 1.1em; line-height: 1.6; margin-bottom: 20px;">
+            <strong>StudyHub</strong> — это платформа для студентов, где они могут делиться своими проектами, 
+            демонстрировать свои навыки и вдохновляться работами других.
+        </p>
+        
+        <h3 style="margin-top: 30px; margin-bottom: 15px;">Возможности платформы:</h3>
+        <ul style="line-height: 1.8; margin-left: 20px;">
+            <li>Создание и публикация проектов</li>
+            <li>Добавление фотографий к проектам</li>
+            <li>Описание используемых технологий</li>
+            <li>Редактирование своих проектов</li>
+            <li>Просмотр проектов других студентов</li>
+        </ul>
+        
+        <h3 style="margin-top: 30px; margin-bottom: 15px; color: #ffae00;">Как опубликовать проект:</h3>
+        <div style="background-color: #161b22; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #30363d;">
+            <ol style="line-height: 2; margin-left: 20px;">
+                <li><strong>Зарегистрируйтесь</strong> или войдите в свой аккаунт</li>
+                <li>Нажмите на кнопку <strong>"Добавить проект"</strong> в навигации</li>
+                <li>Заполните форму:
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><strong>Название проекта</strong> - придумайте интересное название</li>
+                        <li><strong>Описание</strong> - расскажите о вашем проекте, его целях и особенностях</li>
+                        <li><strong>Технологии</strong> - укажите используемые технологии (например: Python, Django, React)</li>
+                        <li><strong>Внешняя ссылка</strong> - добавьте ссылку на GitHub, демо или сайт проекта (необязательно)</li>
+                        <li><strong>Фотография</strong> - загрузите скриншот или изображение проекта (будет автоматически уменьшено)</li>
+                    </ul>
+                </li>
+                <li>Нажмите <strong>"Создать проект"</strong></li>
+                <li>Ваш проект появится в общей ленте проектов!</li>
+            </ol>
+        </div>
+        
+        <h3 style="margin-top: 30px; margin-bottom: 15px;">Как это работает:</h3>
+        <p style="line-height: 1.6; margin-bottom: 20px;">
+            Зарегистрируйтесь, создайте свой профиль и начните делиться своими проектами. 
+            Вы можете добавлять описания, фотографии и ссылки на ваши работы. 
+            Только вы можете редактировать свои собственные проекты. Посетите свой профиль, чтобы увидеть все ваши проекты и статистику.
+        </p>
+        
+        <p style="margin-top: 30px; font-style: italic; color: #666;">
+            © 2025 StudyHub by Kamron
+        </p>
+    </div>
+    
+    <a href="/" class="back-link" style="margin-top: 30px;">← Назад к проектам</a>
+</div>
+{% endblock %}
+

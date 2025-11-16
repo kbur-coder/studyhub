@@ -5,17 +5,58 @@
 {% block content %}
 <h2 class="page-title">Проекты студентов</h2>
 
+<div class="projects-grid">
 {% for project in projects %}
-    <div class="card">
+    <div class="card clickable-card" data-href="{% url 'project_detail' project.id %}" style="cursor: pointer;">
+        {% if project.image %}
+            <img class="project-img" src="{{ project.image.url }}" alt="{{ project.title }}">
+        {% endif %}
         <h3>{{ project.title }}</h3>
-        <p>{{ project.description }}</p>
+        <p>{{ project.description|truncatewords:30 }}</p>
         <p><b>Технологии:</b> {{ project.technologies }}</p>
-        {% if project.github_link %}
-            <a class="github-link" href="{{ project.github_link }}" target="_blank">GitHub</a>
+        {% if project.external_link %}
+            <a class="github-link" href="{{ project.external_link }}" target="_blank" onclick="event.stopPropagation();">Ссылка на проект</a>
+        {% endif %}
+        {% if project.author %}
+            <div style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
+                {% if project.author.profile.avatar %}
+                    <img src="{{ project.author.profile.avatar.url }}" alt="{{ project.author.username }}" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;">
+                {% else %}
+                    <div style="width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #ffae00 0%, #ff8800 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; font-weight: bold;">
+                        {{ project.author.username|first|upper }}
+                    </div>
+                {% endif %}
+                <p style="margin: 0;"><b>Автор:</b> <a href="{% url 'profile' project.author.username %}" style="color: #58a6ff; text-decoration: none;" onclick="event.stopPropagation();">{{ project.author.username }}</a></p>
+            </div>
+        {% else %}
+            <p><b>Автор:</b> Не указан</p>
         {% endif %}
         <p class="date">{{ project.created_at|date:"d.m.Y" }}</p>
+        
+        {% if project.author == user %}
+            <a href="{% url 'edit_project' project.id %}" class="btn-primary" style="display: inline-block; margin-top: 10px;" onclick="event.stopPropagation();">Редактировать</a>
+        {% endif %}
     </div>
 {% empty %}
     <p>Пока нет проектов 😔</p>
 {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const clickableCards = document.querySelectorAll('.clickable-card');
+    clickableCards.forEach(function(card) {
+        card.addEventListener('click', function(e) {
+            // Проверяем, не кликнули ли на ссылку или кнопку
+            if (e.target.tagName === 'A' || e.target.closest('a')) {
+                return; // Позволяем ссылке работать нормально
+            }
+            const href = this.getAttribute('data-href');
+            if (href) {
+                window.location.href = href;
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

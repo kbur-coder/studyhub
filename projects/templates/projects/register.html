@@ -5,9 +5,58 @@
 {% block content %}
 <div class="create-container">
     <h2>Регистрация</h2>
+    <p style="color: #666; margin-bottom: 20px;">Создайте аккаунт, чтобы начать делиться своими проектами</p>
+    
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}:</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}:</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.password1.id_for_label }}">Пароль:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.password2.id_for_label }}">Подтверждение пароля:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div style="color: red; font-size: 0.9em;">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+        
         <button type="submit" class="btn-primary">Зарегистрироваться</button>
     </form>
     <a href="/login/" class="back-link">Уже есть аккаунт? Войти</a>

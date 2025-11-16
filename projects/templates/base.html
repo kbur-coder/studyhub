@@ -3,8 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}StudyHub{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% if debug %}
+    <!-- Debug: Static files should be loaded from /static/css/style.css -->
+    {% endif %}
 </head>
 <body>
 <header>
@@ -12,11 +16,15 @@
         <h1><a href="/">StudyHub</a></h1>
             <nav>
                 <a class="a-primary"  href="/">Проекты</a>
-                <a class="a-primary"  href="/create/">Добавить проект</a>
                 {% if user.is_authenticated %}
+                    <a class="a-primary"  href="/create/">Добавить проект</a>
+                {% endif %}
+                <a class="a-primary"  href="/about/">О нас</a>
+                {% if user.is_authenticated %}
+                    <a class="a-primary"  href="{% url 'profile' %}">Профиль</a>
                     <form method="post" action="/logout/" style="display:inline;">
                         {% csrf_token %}
-                        <button class="btn-primary" type="submit">Выйти</button>
+                        <button type="submit" class="logout-btn">Выйти</button>
                     </form>
                 {% else %}
                     <a class="a-primary"  href="/login/">Войти</a>

@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: studyhub
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn backend.wsgi"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
