@@ -49,25 +49,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+import os
 import dj_database_url
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+}
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', 'studyhub_db'),
-            'USER': os.environ.get('DB_USER', 'studyhub_user'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', '29682968'),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
-        }
-    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
