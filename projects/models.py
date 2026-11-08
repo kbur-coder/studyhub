@@ -17,12 +17,6 @@ class Profile(models.Model):
     def __str__(self):
         return f'Профиль {self.user.username}'
     
-    def get_avatar_url(self):
-        """Возвращает URL аватара или дефолтный"""
-        if self.avatar:
-            return self.avatar.url
-        return '/static/images/default-avatar.png'
-    
     class Meta:
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
